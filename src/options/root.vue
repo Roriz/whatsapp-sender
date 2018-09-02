@@ -13,6 +13,14 @@
       button.btn.btn-primary(type="submit") Send!
 </template>
 <script>
+/* eslint-disable no-undef, no-console */
+
+import { compact, trim } from 'lodash';
+
+const WHATSAPP_URL = 'https://api.whatsapp.com/send';
+const link = document.createElement('a');
+link.target = '_blank';
+
 export default {
   name: 'Options',
 
@@ -21,18 +29,27 @@ export default {
       prefix: '5561',
       phones: '83798207',
       message: 'Test',
+      queue: [],
     };
+  },
+
+  mounted() {
+    window.addEventListener('focus', this.sendNext);
   },
 
   methods: {
     handleSubmit() {
-      const phones = this.phones.split(',');
-
-      const link = document.createElement('a');
-      link.href = `https://api.whatsapp.com/send?phone=${this.prefix}${phones[0]}&text=${this.message}`;
-      link.target = '_blank';
-      link.click();
+      this.queue = compact(this.phones.split(',').map(p => trim(p)));
+      this.sendNext();
     },
+
+    sendNext() {
+      const phone = this.queue.pop();
+      if (phone) {
+        link.href = `${WHATSAPP_URL}?phone=${this.prefix}${phone}&text=${this.message}`;
+        link.click();
+      }
+    }
   },
 };
 </script>

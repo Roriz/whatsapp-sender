@@ -45,7 +45,6 @@ module.exports = {
           extractCSS: true,
           loaders: {
             ...cssLoaders(),
-            js: { loader: 'babel-loader' }
           },
           transformToRequire: {
             video: 'src',
@@ -54,11 +53,6 @@ module.exports = {
             image: 'xlink:href'
           }
         }
-      },
-      {
-        test: /\.js$/,
-        loader: 'babel-loader',
-        include:  [path.join(__dirname, '..', 'src'), path.join(__dirname, '..', 'test')],
       },
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,

@@ -1,8 +1,8 @@
 
 module.exports = {
-  name: 'Vue Extension',
+  name: 'whatsapp-sender',
   version: '0.0.1',
-  description: 'Vue.js Chrome Extension Template (wcer)',
+  description: 'Send message for any whatsapp-user',
   author: 'Radamés Roriz <radamesroriz@gmail.com>',
   manifest_version: 2,
   icons: { '16': 'icons/16.png', '128': 'icons/128.png' },
@@ -11,14 +11,7 @@ module.exports = {
     '*://*/*',
     'activeTab',
     'tabs',
-    'cookies',
     'background',
-    'contextMenus',
-    'unlimitedStorage',
-    'storage',
-    'notifications',
-    'identity',
-    'identity.email',
     'webNavigation'
   ],
   browser_action: {

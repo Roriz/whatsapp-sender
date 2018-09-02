@@ -1,7 +1,7 @@
 {
   "name": "whatsapp-sender",
   "version": "0.0.1",
-  "description": "vue.js chrome extension template (wcer)",
+  "description": "Send message for any whatsapp-user",
   "author": "Radamés Roriz <radamesroriz@gmail.com>",
   "license": "MIT",
   "private": false,

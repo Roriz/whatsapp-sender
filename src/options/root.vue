@@ -5,17 +5,15 @@
       input.form-control(placeholder="5511" v-model="prefix")
     .form-group
       label Phone numbers
-      textarea.form-control(placeholder="953664050,953664051" v-model="phones")
+      textarea.form-control(placeholder="912345678,912345679" v-model="phones")
     .form-group
       label Message
       textarea.form-control(placeholder="Hi, thanks for using this  extention" v-model="message")
 
-      button.btn.btn-primary(type="submit") Send!
+      button.btn.btn-primary(type="submit") Send to {{ clearPhones.length }} phones!
 </template>
 <script>
 /* eslint-disable no-undef, no-console */
-
-import { compact, trim } from 'lodash';
 
 const WHATSAPP_URL = 'https://api.whatsapp.com/send';
 const link = document.createElement('a');
@@ -26,11 +24,17 @@ export default {
 
   data() {
     return {
-      prefix: '5561',
-      phones: '83798207',
-      message: 'Test',
+      prefix: '5511',
+      phones: '',
+      message: '',
       queue: [],
     };
+  },
+
+  computed: {
+    clearPhones() {
+      return this.phones.replace(/[^0-9,]/g, '').match(/[0-9]{9}/g);
+    },
   },
 
   mounted() {
@@ -39,7 +43,7 @@ export default {
 
   methods: {
     handleSubmit() {
-      this.queue = compact(this.phones.split(',').map(p => trim(p)));
+      this.queue = this.clearPhones.slice();
       this.sendNext();
     },
 
@@ -49,7 +53,7 @@ export default {
         link.href = `${WHATSAPP_URL}?phone=${this.prefix}${phone}&text=${this.message}`;
         link.click();
       }
-    }
+    },
   },
 };
 </script>

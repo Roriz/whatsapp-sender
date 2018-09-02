@@ -7,7 +7,7 @@
 var WebpackReloadPlugin = false;
 (function (chrome, window) {
     const name = 'inject';
-    const id = parseInt('2');
+    const id = parseInt('1');
     const wsHost = 'ws://localhost:9090/';
     const filename = 'js/inject.js';
     const { runtime, tabs } = chrome;
@@ -126,15 +126,15 @@ var inject =
 /******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 25:
+/***/ 17:
 /***/ (function(module, exports) {
 
-eval("/* eslint-disable no-undef */\n\nvar content = chrome.extension.getURL('js/content.js')\nvar script = document.createElement('script')\nscript.setAttribute('type', 'text/javascript')\nscript.setAttribute('src', content)\ndocument.body.appendChild(script)\n\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMjUuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvY29udGVudC9pbmplY3QuanM/N2ZiOCJdLCJzb3VyY2VzQ29udGVudCI6WyIvKiBlc2xpbnQtZGlzYWJsZSBuby11bmRlZiAqL1xuXG52YXIgY29udGVudCA9IGNocm9tZS5leHRlbnNpb24uZ2V0VVJMKCdqcy9jb250ZW50LmpzJylcbnZhciBzY3JpcHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzY3JpcHQnKVxuc2NyaXB0LnNldEF0dHJpYnV0ZSgndHlwZScsICd0ZXh0L2phdmFzY3JpcHQnKVxuc2NyaXB0LnNldEF0dHJpYnV0ZSgnc3JjJywgY29udGVudClcbmRvY3VtZW50LmJvZHkuYXBwZW5kQ2hpbGQoc2NyaXB0KVxuXG5cblxuLy8vLy8vLy8vLy8vLy8vLy8vXG4vLyBXRUJQQUNLIEZPT1RFUlxuLy8gLi9zcmMvY29udGVudC9pbmplY3QuanNcbi8vIG1vZHVsZSBpZCA9IDI1XG4vLyBtb2R1bGUgY2h1bmtzID0gMiJdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7Iiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///25\n");
+eval("/* eslint-disable no-undef */\n\nvar content = chrome.extension.getURL('js/content.js')\nvar script = document.createElement('script')\nscript.setAttribute('type', 'text/javascript')\nscript.setAttribute('src', content)\ndocument.body.appendChild(script)\n\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiMTcuanMiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vLi9zcmMvY29udGVudC9pbmplY3QuanM/N2ZiOCJdLCJzb3VyY2VzQ29udGVudCI6WyIvKiBlc2xpbnQtZGlzYWJsZSBuby11bmRlZiAqL1xuXG52YXIgY29udGVudCA9IGNocm9tZS5leHRlbnNpb24uZ2V0VVJMKCdqcy9jb250ZW50LmpzJylcbnZhciBzY3JpcHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KCdzY3JpcHQnKVxuc2NyaXB0LnNldEF0dHJpYnV0ZSgndHlwZScsICd0ZXh0L2phdmFzY3JpcHQnKVxuc2NyaXB0LnNldEF0dHJpYnV0ZSgnc3JjJywgY29udGVudClcbmRvY3VtZW50LmJvZHkuYXBwZW5kQ2hpbGQoc2NyaXB0KVxuXG5cblxuLy8vLy8vLy8vLy8vLy8vLy8vXG4vLyBXRUJQQUNLIEZPT1RFUlxuLy8gLi9zcmMvY29udGVudC9pbmplY3QuanNcbi8vIG1vZHVsZSBpZCA9IDE3XG4vLyBtb2R1bGUgY2h1bmtzID0gMSJdLCJtYXBwaW5ncyI6IkFBQUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7Iiwic291cmNlUm9vdCI6IiJ9\n//# sourceURL=webpack-internal:///17\n");
 
 /***/ })
 

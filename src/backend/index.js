@@ -1,38 +1,55 @@
 /* eslint-disable no-undef, no-console */
 
-function clickToOpenChat() {
-  document.getElementById('action-button').click();
-}
+const Sender = require('./sender');
+const ClickToSend = require('./click-to-send');
 
-function clickToSend() {
-  const awaitFor = (selector) => {
-    return new Promise((resolve) => {
-      if (document.querySelector(selector)) {
-        resolve();
-      } else {
-        setTimeout(() => {
-          awaitFor(selector).then(resolve);
-        }, 500);
-      }
-    });
-  }
-  awaitFor('[contenteditable]').then(() => {
-    document.querySelectorAll('footer button')[1].click();
-    setTimeout(() => {
-      window.close();
-    }, 200);
-  });
-}
 
 function openPage({ url, tabId }) {
-  if (url.includes('api.whatsapp.com')) {
-    chrome.tabs.executeScript(tabId, { code: `(${clickToOpenChat})();` });
-  }
-
   if (url.includes('web.whatsapp.com')) {
-    chrome.tabs.executeScript(tabId, { code: `(${clickToSend})();` });
+    chrome.tabs.executeScript(tabId, { code: `(${ClickToSend})();` });
   }
 }
 
-chrome.browserAction.onClicked.addListener(() => chrome.runtime.openOptionsPage());
+const events = {
+  'ws-start': startSender,
+  'ws-finish': finishSender,
+  'ws-success': successSender,
+  'ws-invalid': invalidSender,
+};
+
+function onMessage(obj) {
+  if (typeof obj !== 'object' || !obj.type.includes('ws-')) { return; }
+
+  const event = events[obj.type];
+  if (event) {
+    event(obj.params);
+  } else {
+    throw new Error('mgs-not-found');
+  }
+}
+
+let sender;
+function startSender(params) {
+  sender = new Sender(params);
+}
+
+function finishSender() {
+  console.log('finish');
+}
+
+function successSender() {
+  sender.feedback('success');
+}
+
+function invalidSender() {
+  sender.feedback('invalid');
+}
+
+function onRemoved() {
+  if (!sender) { return; }
+  sender.next();
+}
+
+chrome.tabs.onRemoved.addListener(onRemoved);
 chrome.webNavigation.onCompleted.addListener(openPage);
+chrome.runtime.onMessage.addListener(onMessage);

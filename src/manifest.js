@@ -15,13 +15,12 @@ module.exports = {
     'webNavigation'
   ],
   browser_action: {
-    name: 'Open sender'
+    default_title: 'title',
+    default_popup: 'pages/popup.html'
   },
   background: {
     persistent: false,
     page: 'pages/background.html'
   },
-  options_page: 'pages/options.html',
   content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'",
-  web_accessible_resources: [ 'panel.html', 'js/content.js' ]
 }

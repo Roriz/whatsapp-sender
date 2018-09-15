@@ -19,17 +19,17 @@ module.exports = async function clickToSend() {
     });
   }
 
+  let type = 'ws-invalid';
   const valid = await awaitFor();
 
   if (valid) {
+    type = 'ws-success';
     document.querySelectorAll('footer button')[1].click();
-    window.chrome.runtime.sendMessage({ type: 'ws-success' });
-  } else {
-    window.chrome.runtime.sendMessage({ type: 'ws-invalid' });
   }
 
   
   setTimeout(() => {
+    window.chrome.runtime.sendMessage({ type });
     window.close();
   }, 200);
 }

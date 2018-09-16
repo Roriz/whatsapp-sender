@@ -1,49 +1,91 @@
 <template lang="pug">
-form(@submit.prevent="handleSubmit")
-  .form-group
-    label Prefix
-    input.form-control(placeholder="5511" v-model="prefix")
-  .form-group
-    label Phone numbers
-    textarea.form-control(placeholder="912345678,912345679" v-model="phones")
-  .form-group
-    label Message
-    textarea.form-control(placeholder="Hi, thanks for using this  extention" v-model="message")
+div#app
+  ul.menu
+    li(v-for="(item, key) in menu", :key="key", @click="handleMenu(item)") {{ item.name }}
 
-    button.btn.btn-primary(type="submit") Send to {{ validPhones.length }} phones!
+  div.content
+    keep-alive
+      component(:is="container")
 </template>
 <script>
-/* eslint-disable no-undef, no-console */
+import Message from './components/message';
+import Groups from './components/groups';
+import Reports from './components/reports';
 
 export default {
-  name: 'Options',
+  name: 'Popup',
+
+  components: {
+    Message,
+    Groups,
+    Reports,
+  },
+
+  props: {
+    menu: {
+      type: Array,
+      default: () => ([{
+        name: 'Send message',
+        component: 'message',
+      }, {
+        name: 'Manager Groups',
+        component: 'groups',
+      }, {
+        name: 'Reports',
+        component: 'reports',
+      }])
+    }
+  },
 
   data() {
     return {
-      prefix: '5561',
-      phones: '983791111',
-      message: 'test',
-      queue: [],
+      activeContent: this.menu[0],
     };
   },
 
   computed: {
-    validPhones() {
-      return this.phones.replace(/[^0-9,]/g, '').match(/[0-9]{9}/g) || [];
+    container() {
+      return this.activeContent.component;
     },
   },
 
   methods: {
-    handleSubmit() {
-      chrome.runtime.sendMessage({
-        type: 'ws-start',
-        params: {
-          prefix: this.prefix,
-          message: this.message,
-          phones: this.validPhones,
-        },
-      });
+    handleMenu(item) {
+      this.activeContent = item;
     },
   },
 };
 </script>
+
+<style scoped>
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  display: flex;
+  flex-direction: row;
+  min-width: 700px;
+  min-height: 500px;
+}
+
+.menu li {
+  padding: 10px 20px;
+}
+
+.menu li + li {
+  border-top: 1px solid #ccc;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.menu + .content {
+  margin-left: 40px;
+}
+
+</style>

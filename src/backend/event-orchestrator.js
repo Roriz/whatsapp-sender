@@ -5,7 +5,7 @@ const Sender = require('./sender');
 module.exports = class EventOrchestrator {
   constructor() {
     this.sender = null;
-    this.startTime = 0;
+    this.startTime = new Date();
     this.report = {
       success: 0,
       fail: 0,
@@ -59,7 +59,24 @@ module.exports = class EventOrchestrator {
     }
   }
 
-  finish() {
-    console.log('-- report', this.report);
+  async finish() {
+    chrome.storage.sync.get(['reports'], (storage) => {
+      const reports = (storage.reports || []);
+
+      reports.push({
+        prefix: this.sender.prefix,
+        message: this.sender.message,
+        phones: this.sender.phones,
+        duration: new Date() - this.startTime,
+        success: this.report.success,
+        fail: this.report.fail,
+        invalid: this.report.invalid,
+        invalidPhones: this.invalidPhones,
+        createdAt: new Date(),
+      });
+
+      chrome.storage.sync.set({ reports });
+    });
+
   }
 }

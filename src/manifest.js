@@ -11,6 +11,7 @@ module.exports = {
     '*://*/*',
     'activeTab',
     'tabs',
+    'storage',
     'background',
     'webNavigation'
   ],

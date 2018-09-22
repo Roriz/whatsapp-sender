@@ -17,7 +17,6 @@ table
       td {{ report.success }}
       td {{ report.invalid }}
 
-
 </template>
 
 <script>

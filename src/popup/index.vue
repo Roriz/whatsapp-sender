@@ -8,9 +8,9 @@ div#app
       component(:is="container")
 </template>
 <script>
-import Message from './components/message';
-import Groups from './components/groups';
-import Reports from './components/reports';
+import Message from './pages/message';
+import Groups from './pages/groups';
+import Reports from './pages/reports';
 
 export default {
   name: 'Popup',

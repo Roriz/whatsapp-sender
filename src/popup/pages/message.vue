@@ -47,8 +47,9 @@ export default {
       window.chrome.runtime.sendMessage({
         type: 'ws-start',
         params: {
-          group: this.group,
-          phones: this.validPhones,
+          prefix: this.group.prefix,
+          phones: this.group.phones,
+          message: this.message,
         },
       });
     },

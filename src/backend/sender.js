@@ -28,12 +28,13 @@ module.exports = class Sender {
     } else {
       this.openBrowser(`${this.prefix}${this.currentPhone}`, this.message);
     }
-    
+
     this.queuePos += 1;
   }
 
   openBrowser(phone, message) {
-    link.href = `${WHATSAPP_URL}?phone=${phone}&text=${message}`;
+    const queryParam = encodeURI(`phone=${phone}&text=${message}`);
+    link.href = `${WHATSAPP_URL}?${queryParam}`;
     link.click();
   }
 }

@@ -4,11 +4,13 @@ module.exports = {
     es6: true
   },
   plugins: ['vue'],
+
   extends: [
     'airbnb-base',
     'eslint:recommended',
     'plugin:vue/recommended'
   ],
+
   parserOptions: {
     parser: 'babel-eslint',
     sourceType: 'module'

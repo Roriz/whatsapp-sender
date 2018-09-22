@@ -2,6 +2,10 @@
 div.ws-page
   form(@submit.prevent="handleSubmit")
     .form-group
+      label Prefix
+      input.form-control(placeholder="5511" v-model="prefix")
+
+    .form-group
       label name
       input(v-model="name" required)
 
@@ -15,12 +19,14 @@ div.ws-page
     thead
       tr
         th Name
-        th Phones
+        th Prefix
+        th Phones count
         th Created at
 
     tbody
       tr(v-for="(group, key) in groups" :key="key" @click="handleClickRow(group)")
         td {{ group.name }}
+        td {{ group.prefix }}
         td {{ group.phones.length }}
         td.action
           span {{ group.createdAt }}
@@ -28,6 +34,8 @@ div.ws-page
 
 </template>
 <script>
+  /* eslint-disable no-undef, no-console */
+
 import '../../stylesheet/main.css';
 import uuid from 'uuid/v4';
 
@@ -38,6 +46,7 @@ export default {
     return {
       name: '',
       phones: '',
+      prefix: '',
       groups: [],
     };
   },
@@ -49,30 +58,25 @@ export default {
   },
 
   mounted() {
-    this.populate();
+    this.groups = this.$store.state.groups.list || [];
   },
 
   methods: {
     handleClickRow(group) {
-      this.groups = this.groups.filter(g => g.id !== group.id);
-
-      window.chrome.storage.sync.set({ groups: this.groups });
+      this.$store.dispatch('groups/destroy', group);
     },
 
     handleSubmit() {
-      this.groups.push({
+      const group = {
         id: uuid(),
+        prefix: this.prefix,
         name: this.name,
         phones: this.validPhones,
         createdAt: new Date().getTime(),
-      });
-      window.chrome.storage.sync.set({ groups: this.groups });
-    },
+      };
 
-    populate() {
-      window.chrome.storage.sync.get('groups', (storage) => {
-        this.groups = storage.groups || [];
-      });
+      this.$store.dispatch('groups/add', group);
+      this.$forceUpdate();
     },
   },
 };

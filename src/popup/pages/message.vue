@@ -2,19 +2,20 @@
 div.ws-page
   form(@submit.prevent="handleSubmit")
     .form-group
-      label Prefix
-      input.form-control(placeholder="5511" v-model="prefix")
-    .form-group
-      label Phone numbers
-      textarea.form-control(rows=8 placeholder="912345678,912345679" v-model="phones")
+      label Group
+      select(v-model="groupId")
+        option(value="") Select one group
+        option(v-for="group in groups" :key="group.id" :value="group.id") {{ group.name }} ({{ group.phones.length }} phones)
     .form-group
       label Message
       textarea.form-control(rows=8 placeholder="Hi, thanks for using this  extention" v-model="message")
 
-      button.btn.btn-primary(type="submit") Send to {{ validPhones.length }} phones!
+      button.btn.btn-primary(type="submit" :disabled="!isValid") Send!
 </template>
 
 <script>
+  /* eslint-disable no-undef, no-console */
+
 import '../../stylesheet/main.css';
 
 export default {
@@ -22,16 +23,22 @@ export default {
 
   data() {
     return {
-      prefix: '5561',
-      phones: '983791111',
-      message: 'test',
-      queue: [],
+      message: '',
+      groupId: '',
     };
   },
 
   computed: {
-    validPhones() {
-      return this.phones.replace(/[^0-9,]/g, '').match(/[0-9]{9}/g) || [];
+    groups() {
+      return this.$store.state.groups.list || [];
+    },
+
+    group() {
+      return this.groups.find(g => g.id === this.groupId) || {};
+    },
+
+    isValid() {
+      return this.message && this.groupId;
     },
   },
 
@@ -40,8 +47,7 @@ export default {
       window.chrome.runtime.sendMessage({
         type: 'ws-start',
         params: {
-          prefix: this.prefix,
-          message: this.message,
+          group: this.group,
           phones: this.validPhones,
         },
       });

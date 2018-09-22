@@ -20,7 +20,6 @@ table
 </template>
 
 <script>
-/* eslint-disable no-undef, no-console */
 export default {
   name: 'Reports',
 
@@ -31,23 +30,7 @@ export default {
   },
 
   mounted() {
-    this.populate();
-  },
-
-  methods: {
-    populate() {
-      window.chrome.storage.sync.get('reports', (storage) => {
-        this.reports = storage.reports;
-      });
-    },
+    this.reports = this.$store.state.reports.list || [];
   },
 }
 </script>
-
-<style scoped>
-
-table {
-  width: 100%
-}
-
-</style>

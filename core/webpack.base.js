@@ -32,7 +32,9 @@ module.exports = {
         enforce: 'pre',
         include: [path.join(__dirname, '..', 'src'), path.join(__dirname, '..', 'test')],
         options: {
-          formatter: require('eslint-friendly-formatter')
+          formatter: require('eslint-friendly-formatter'),
+          failOnError: false,
+          failOnWarning: false,
         }
       },
       {

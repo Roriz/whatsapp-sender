@@ -1,6 +1,6 @@
 {
   "name": "whatsapp-sender",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Send message for any whatsapp-user",
   "author": "Radamés Roriz <radamesroriz@gmail.com>",
   "license": "MIT",

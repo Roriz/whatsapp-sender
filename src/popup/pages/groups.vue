@@ -11,7 +11,13 @@ div.ws-page
 
     .form-group
       label phones
-      textarea(v-model="phones" required)
+      textarea(v-model="phones" rows="10" required)
+
+    span or
+
+    .form-group
+      label file
+      input(type="file" @change="handleFile")
 
     button.btn.btn-primary(type="submit") Save
 
@@ -48,12 +54,13 @@ export default {
       phones: '',
       prefix: '',
       groups: [],
+      file: null,
     };
   },
 
   computed: {
     validPhones() {
-      return this.phones.replace(/[^0-9,]/g, '').match(/[0-9]{9}/g) || [];
+      return this.validatePhones(this.phones) || [];
     },
   },
 
@@ -77,6 +84,51 @@ export default {
 
       this.$store.dispatch('groups/add', group);
       this.$forceUpdate();
+    },
+
+    handleFile(e) {
+      const [file] = e.target.files;
+      const [ext] = file.name.match(/\..*$/gi);
+
+      let promise;
+      if (ext === '.txt') {
+        promise = this.getFileText(file);
+      } else if (ext === '.json') {
+        promise = this.getFileJson(file);
+      } else {
+        return;
+      }
+
+      promise.then((phones) => {
+        this.phones = phones;
+      });
+    },
+
+    getFileText(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.readAsText(file);
+      });
+    },
+
+    getFileJson(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const result = JSON.parse(reader.result);
+            resolve(result);
+          } catch (e) {
+            reject(e);
+          }
+        };
+        reader.readAsText(file);
+      });
+    },
+
+    validatePhones(phones) {
+      return phones.replace(/[^0-9,]/g, '').match(/[0-9]{9}/g) || [];
     },
   },
 };

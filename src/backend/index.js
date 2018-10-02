@@ -11,3 +11,4 @@ function openPage({ url, tabId }) {
 
 new EventOrchestrator();
 chrome.webNavigation.onCompleted.addListener(openPage);
+chrome.browserAction.onClicked.addListener(() => chrome.runtime.openOptionsPage());

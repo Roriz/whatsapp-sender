@@ -7,7 +7,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 let resolve = dir => path.join(__dirname, '..', 'src', dir)
 module.exports = {
   entry: {
-    popup: resolve('./popup'),
+    options: resolve('./options'),
     background: resolve('./backend'),
   },
   output: {
@@ -80,7 +80,7 @@ module.exports = {
     ]
   },
   plugins: [
-    htmlPage('popup', 'popup', ['popup']),
+    htmlPage('options', 'options', ['options']),
     htmlPage('background', 'background', ['background']),
     new CopyWebpackPlugin([{ from: path.join(__dirname, '..', 'static') }]),
     new ChromeReloadPlugin({

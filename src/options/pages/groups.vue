@@ -24,8 +24,6 @@ v-container(fluid grid-list-xl)
 
 </template>
 <script>
-  /* eslint-disable no-undef, no-console */
-
 import uuid from 'uuid/v4';
 import moment from '../mixins/moment';
 
@@ -81,7 +79,7 @@ export default {
     },
 
     save() {
-      if (!this.valid) { return; }
+      if (!this.isValid) { return; }
 
       const group = {
         id: uuid(),
@@ -137,7 +135,7 @@ export default {
     },
 
     validatePhones(phones) {
-      return phones.replace(/[^0-9,]/g, '').match(/[0-9]{9}/g) || [];
+      return phones.replace(/[^0-9,]/g, '').match(/[0-9]+/g) || [];
     },
   },
 };

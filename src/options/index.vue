@@ -8,8 +8,6 @@ div#app(data-app)
       component(:is="container")
 </template>
 <script>
-  /* eslint-disable no-undef, no-console */
-
 import Message from './pages/message';
 import Groups from './pages/groups';
 import Reports from './pages/reports';
